@@ -1,11 +1,8 @@
 ---
-title: API Reference
+title: API Reference URI Online Judge
 
 language_tabs:
-  - shell
-  - ruby
   - python
-  - javascript
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -19,171 +16,425 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the official URI Online Judge API!
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+By harnessing the power of our API you can access information about our problems and build complementary tools to help the programming community.
 
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+## General considerations
+
+- API endpoint:</br>```https://api.urionlinejudge.com.br```
+
+### Requests
+
+<aside class="success">
+Important: Use HTTPS for all requests.
+</aside>
+
+- **By default, each site/application could make 100 requests per hour for the API endpoint.** This limit may be changed based on usage.
+
+### Token authenticate
+
+- To make requests to the API, you must obtain a TOKEN, that is **valid for 1 week**.
+
+- Generated Token Example:</br>```fyJ0eXPoOiLKO1QiLCJhbGciOiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBiyDVmXIy2pBvFkDEtBiPqVEC-U```
+
+<aside class="warning">
+The token above is just an example, don't use this token in your application.
+</aside>
+
+
+### Timestamp
+
+- Timestamps are rendered in ISO-8601 format: 2012-02-24T19:42:12+00:00
 
 # Authentication
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+> To generate the access token, use the code:
 
 ```python
-import kittn
+import json
+import requests
 
-api = kittn.authorize('meowmeowmeow')
+url = "https://api.urionlinejudge.com.br/applications/token"
+
+data = {
+    'email': 'the-first-one@api.urionlinejudge.com.br',
+    'password': '11uri12'
+    }
+
+headers = {
+    'content-type': "application/json",
+    'accept': "application/json",
+    }
+
+response = requests.request("POST", url, data=json.dumps(data), headers=headers)
+
+print(response.text)
 ```
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
+> Your Authorization token should look like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "token": "fyJ0eXPoOiLKO1QiiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBipBvFkDEtBiPqVEC-U"
 }
 ```
 
-This endpoint retrieves a specific kitten.
+- Generate Token:</br>
+**POST** ```applications/token```
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+<aside class="notice">
+With this TOKEN, you can make GET requests, to get the categories and problems information.
+</aside>
 
-### HTTP Request
+# Categories
 
-`GET http://example.com/kittens/<ID>`
+> To access the categories use this code:
+
+```python
+import requests
+
+url = "https://api.urionlinejudge.com.br/categories"
+
+headers = {
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "fyJ0eXPoOiLKO1QiiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBipBvFkDEtBiPqVEC-U",
+    }
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+> This code, will return a JSON like this:
+
+```json
+{
+  "categories": [
+    {
+      "id": 1,
+      "problems": 188,
+      "en": {
+        "name": "Beginner"
+      },
+      "es": {
+        "name": "Principiante"
+      },
+      "pt": {
+        "name": "Iniciante"
+      }
+    },
+    {
+      "id": 2,
+      "problems": 526,
+      "en": {
+        "name": "Ad-Hoc"
+      },
+      "es": {
+        "name": "Ad-Hoc"
+      },
+      "pt": {
+        "name": "Ad-Hoc"
+      }
+    },
+  ]
+}
+```
+
+- List categories:</br>
+**GET:** ```/categories``` 
+
+<aside class="success">
+Remember to add an authentication header, with your token in your request!
+</aside>
+
+### JSON Return
+
+Parameter  | Type    | Description
+---------- | ------- | -------------------------------------------------
+id         | integer | ID of the category
+problems   | integer | Number of problems in this category
+en         | object  | An object representing the English language
+es         | object  | An object representing the Spanish language
+pt         | object  | An object representing the Portuguese language
+
+### Internationalized data
+
+- The objects returned by the JSON of the categories, representing the languages, English, Spanish and Portuguese, return the following data.
+
+Parameter | Type   | Description
+--------- | ------ | -----------------------------------------------
+name      | string | The name of the category according to the language
+
+### Categories
+
+ID | Category                      
+---|-------------------------------
+1  | Beginner                       
+2  | Ad-Hoc                         
+3  | String                         
+4  | Data Structures and Libraries   
+5  | Mathematics                    
+6  | Paradigms                      
+7  | Graph                          
+8  | Computational Geometry                               
+
+# Problems
+
+> To obtain the information of the problems use this example of requisition:
+
+```python
+import requests
+
+url = "https://api.urionlinejudge.com.br/problems/"
+
+headers = {
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "fyJ0eXPoOiLKO1QiiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBipBvFkDEtBiPqVEC-U",
+    }
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+> This code, will return a JSON like this:
+
+```json
+{
+  "problems": [
+    {
+      "id": 1001,
+      "category": 1,
+      "level": 1,
+      "solved": 87353,
+      "en": {
+        "name": "Extremely Basic",
+        "topics": "sequential"
+      },
+      "es": {
+        "name": "Extremadamente Básico",
+        "topics": "sequential"
+      },
+      "pt": {
+        "name": "Extremamente Básico",
+        "topics": "sequencial"
+      }
+    },
+    {
+      "id": 1002,
+      "category": 1,
+      "level": 1,
+      "solved": 58115,
+      "en": {
+        "name": "Area of a Circle",
+        "topics": "sequential"
+      },
+      "es": {
+        "name": "Área del Círculo",
+        "topics": "sequential"
+      },
+      "pt": {
+        "name": "Área do Círculo",
+        "topics": "sequencial"
+      }
+    },
+  ]
+}
+```
+- List Problems:</br>
+**GET** ```/problems```
+
+<aside class="success">
+Remember to add an authentication header, with your token in your request!
+</aside>
+
+### JSON Return
+
+Parameter  | Type    | Description
+---------- | ------- | -------------------------------------------------
+id         | integer | ID of problem
+category   | integer | ID problem category
+level      | integer | Level of the problem
+solved     | integer | Number of the times that them problem was solved
+en         | object  | An object representing the English language
+es         | object  | An object representing the Spanish language
+pt         | object  | An object representing the Portuguese language
+
+### Internationalized data
+
+- The objects returned by the JSON of the problems, representing the languages, English, Spanish and Portuguese, return the following data.
+
+Parameter | Type   | Description
+--------- | ------ | --------------------------------------------------------------
+name      | string | The name of the category according to the language
+topics    | string | Represent the subject of the problem according to the language
+
+# User data
+
+- It is also possible to obtain user profile information and list of submissions, but for this, it is necessary to obtain authorization from the user. Redirect, From your site/application to:</br>```https://www.urionlinejudge.com.br/judge/authorizations/app/ID```
+
+- After the user authenticates to the URI Online Judge (if it's not already logged in) and give permission, he will be redirected to the URL informed by you.
+
+<aside class="notice">
+After 5 users allowed access you must inform us and allow access to any member of our team to check the integration, allowing log in to the application seeking to ensure that all information is being handled securely and in accordance with the policies of our website (Which will be updated soon to reflect the uses of our API). Thus, the integration will be released to the other users.
+</aside>
+
+From this moment you can access:
+
+## Profile
+
+> To obtain the information of the user profile use this example of requisition:
+
+```python
+import requests
+
+url = "https://api.urionlinejudge.com.br/users/profile/ID"
+
+headers = {
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "fyJ0eXPoOiLKO1QiiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBipBvFkDEtBiPqVEC-U",
+    }
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+
+> This code, will return a JSON like this:
+
+```json
+{
+  "user": {
+    "id": 1,
+    "name": "The Guardian",
+    "statistics": {
+      "rank": 12187,
+      "solved": 56,
+      "tried": 139,
+      "submissions": 1336
+    }
+  }
+}
+```
+- List user profile:</br>
+**GET** ```/users/profile/ID```
+
+<aside class="notice">
+Where ID is the unique identifier of the user in the URI Online Judge.
+</aside>
+
+### JSON Return
+
+Parameter               | Type    | Description
+----------------------- | ------- | -------------------------------------
+user                    | object  | An object representing the user
+user[id]                | integer | Represent the user ID
+user[name]              | string  | Represent the user name
+statistics              | object  | An object representing the user statistics
+statistics[rank]        | integer | Represents the user's rank
+statistics[solved]      | integer | Represents how many problems the user has resolved
+statistics[tried]       | integer | Represents how many problems the user tried to solve
+statistics[Submissions] | integer | Represents how many submissions the user submitted
+
+## Submissions
+
+> For a list of user submissions use this example of requisition:
+
+```python
+import requests
+
+url = "https://api.urionlinejudge.com.br/users/submissions/ID"
+
+headers = {
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "fyJ0eXPoOiLKO1QiiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBipBvFkDEtBiPqVEC-U",
+    }
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+
+```
+
+> This code, will return a JSON like this:
+
+```json
+{
+  "runs": [
+    {
+      "id": 3,
+      "problem": 1001,
+      "answer": 1,
+      "time": 0,
+      "created": "2012-02-24T19:42:12+00:00"
+    },
+    {
+      "id": 4,
+      "problem": 1002,
+      "answer": 6,
+      "time": 0,
+      "created": "2012-02-24T19:42:34+00:00"
+    },
+    {
+      "id": 6,
+      "problem": 1003,
+      "answer": 5,
+      "time": 0,
+      "created": "2012-02-24T19:42:44+00:00"
+    },
+  ]
+}
+```
+
+- List submissions:</br> 
+ **GET**: ```/users/submissions/ID```
+
+<aside class="notice">
+Where ID is the unique identifier of the user in the URI Online Judge.
+</aside>
 
 ### URL Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+Parameter |  Description
+------    |  ---------------
+page      |  Use for pagination
 
+### Pagination
+
+- Remembering that submissions are paginated. additional page information, if there is a next page or previous page, are returned along with the submissions, at the end.
+- To access other pages just use this example:</br>
+**GET**: ```/users/submissions/ID?page=2```
+
+### JSON Return
+
+Parameter  | Type    | Description
+---------- | ------- | -------------------------------------
+id         | integer | Submissions id
+problem    | integer | Problem id
+answer     | integer | Answer id
+time       | integer | Time it took to judge the submission
+created    | date    | Shows when this submission was judged
+
+### Answers
+
+Id  | Name                |  
+--- |-------------------- |
+0   | In Queue            | 
+1   | Accept              | 
+2   | Compilation Error   | 
+3   | Runtime Error       | 
+4   | Time Limit Exceeded | 
+5   | Presentation Error  | 
+6   | Wrong Answer        | 
+9   | Closed              | 
+
+- The descriptions of the answers can be accessed directly by the URL: [answers](https://www.urionlinejudge.com.br/judge/answers)
+
+<aside class="notice">
+You must be logged in to access this link
+</aside>
