@@ -400,15 +400,28 @@ Where ID is the unique identifier of the user in the URI Online Judge.
 
 ### URL Parameters
 
-Parameter |  Description
-------    |  ---------------
-page      |  Use for pagination
+Parameter | Values      | Description
+------    | ----------- | ---------------
+page      | Page number | Use for pagination
+sort      | created     | Use to sort a submission by date created 
+direction | asc OR desc | Use to sort in ascending or descending order
 
 ### Pagination
 
 - Remembering that submissions are paginated. additional page information, if there is a next page or previous page, are returned along with the submissions, at the end.
+
 - To access other pages just use this example:</br>
 **GET**: ```/users/submissions/ID?page=2```
+
+### Sorting 
+
+- To sort the submissions by date created, you must use the **sort** in URL parameter.
+
+- You can sort the result in ascending or descending order.
+
+- To sort the submission just use this example:</br>
+**GET**: ```/users/submissions/1?sort=created&direction=desc```
+
 
 ### JSON Return
 
