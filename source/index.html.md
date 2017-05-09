@@ -20,6 +20,18 @@ Welcome to the official URI Online Judge API!
 
 By harnessing the power of our API you can access information about our problems and build complementary tools to help the programming community.
 
+## Getting Started
+
+In order to request access to the URI Online Judge API, you must send feedback to our team containing the following information:
+
+- Project details;
+- Reason for using the UOJ API in your project;
+- Estimated use. 
+ 
+- To send the feedback with the request, use the link below:</br> ```https://www.urionlinejudge.com.br/judge/en/contact```
+ 
+ **After submitting the request, the URI Online Judge team will contact you.**
+
 ## General considerations
 
 - API endpoint:</br>```https://api.urionlinejudge.com.br```
@@ -274,9 +286,25 @@ topics    | string | Represent the subject of the problem according to the langu
 
 # User data
 
-- It is also possible to obtain user profile information and list of submissions, but for this, it is necessary to obtain authorization from the user. Redirect, From your site/application to:</br>```https://www.urionlinejudge.com.br/judge/authorizations/app/ID```
+- It is also possible to obtain user profile information and list of submissions, but for this, it is necessary to obtain authorization from the user. Redirect, From your site/application to:</br>```https://www.urionlinejudge.com.br/judge/authorizations/app/NAME```
 
-- After the user authenticates to the URI Online Judge (if it's not already logged in) and give permission, he will be redirected to the URL informed by you.
+<aside class="notice">
+The /NAME is given by the URI Online Judge team, based on the name of your application
+</aside>
+
+## Redirect
+
+- After the user authenticates to the URI Online Judge (if it's not already logged in) and give permission, he will be redirected to the URL informed by you. You can pass the URL as a parameter, for instance:</br> ```https://www.urionlinejudge.com.br/judge/en/authorizations/app/NAME?redirect=https://www.yourapplication.com/uri/connect```
+
+- Then, after the user authorized the application it would be redirected to (in this example):</br> ```https://www.yourapplication.com/uri/connect```
+
+<aside class='notice'>
+ That the redirect URL must be in https and must be from the same domain we have registered in our API, otherwise the default URL will be used in the redirect.
+</aside>
+
+### User parameter
+
+- You can pass the user parameter in the redirect URL, so in this example you will get:</br> ```https://www.yourapplication.com/uri/connect?user=ID```
 
 <aside class="notice">
 After 5 users allowed access you must inform us and allow access to any member of our team to check the integration, allowing log in to the application seeking to ensure that all information is being handled securely and in accordance with the policies of our website (Which will be updated soon to reflect the uses of our API). Thus, the integration will be released to the other users.
