@@ -28,7 +28,7 @@ In order to request access to the URI Online Judge API, you must send feedback t
  
  **After submitting the request, the URI Online Judge team will contact you.**
 
-## General considerations
+## General Considerations
 
 - API endpoint:</br>```https://api.urionlinejudge.com.br```
 
@@ -107,7 +107,7 @@ url = "https://api.urionlinejudge.com.br/categories"
 headers = {
     'content-type': "application/json",
     'accept': "application/json",
-    'authorization': "fyJ0eXPoOiLKO1QiiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBipBvFkDEtBiPqVEC-U",
+    'authorization': "Bearer " + "fyJ0eXPoOiLKO1QiiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBipBvFkDEtBiPqVEC-U",
     }
 
 response = requests.request("GET", url, headers=headers)
@@ -200,7 +200,7 @@ url = "https://api.urionlinejudge.com.br/problems/"
 headers = {
     'content-type': "application/json",
     'accept': "application/json",
-    'authorization': "fyJ0eXPoOiLKO1QiiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBipBvFkDEtBiPqVEC-U",
+    'authorization': "Bearer " + "fyJ0eXPoOiLKO1QiiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBipBvFkDEtBiPqVEC-U",
     }
 
 response = requests.request("GET", url, headers=headers)
@@ -280,7 +280,7 @@ Parameter | Type   | Description
 name      | string | The name of the category according to the language
 topics    | string | Represent the subject of the problem according to the language
 
-# User data
+# User Data
 
 - It is also possible to obtain user profile information and list of submissions, but for this, it is necessary to obtain authorization from the user. Redirect, From your site/application to:</br>```https://www.urionlinejudge.com.br/judge/authorizations/app/NAME```
 
@@ -320,7 +320,7 @@ url = "https://api.urionlinejudge.com.br/users/profile/ID"
 headers = {
     'content-type': "application/json",
     'accept': "application/json",
-    'authorization': "fyJ0eXPoOiLKO1QiiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBipBvFkDEtBiPqVEC-U",
+    'authorization': "Bearer " + "fyJ0eXPoOiLKO1QiiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBipBvFkDEtBiPqVEC-U",
     }
 
 response = requests.request("GET", url, headers=headers)
@@ -376,7 +376,7 @@ url = "https://api.urionlinejudge.com.br/users/submissions/ID"
 headers = {
     'content-type': "application/json",
     'accept': "application/json",
-    'authorization': "fyJ0eXPoOiLKO1QiiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBipBvFkDEtBiPqVEC-U",
+    'authorization': "Bearer " + "fyJ0eXPoOiLKO1QiiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBipBvFkDEtBiPqVEC-U",
     }
 
 response = requests.request("GET", url, headers=headers)
