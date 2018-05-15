@@ -475,3 +475,90 @@ Id  | Name                |
 <aside class="notice">
 You must be logged in to access this link
 </aside>
+
+# Submitting Source Codes
+
+- It is possible to submit a source code on behalf of a user using a POST request to the url:</br>
+**POST**: ```https://api.urionlinejudge.com.br/runs/submit```
+
+<aside class="notice">
+For the post method to work you need to send the user ID, language ID the problem ID and source code
+</aside>
+
+## Languages
+
+Id  | Name                |
+--- |-------------------- |
+1   | C                   |
+2   | C++                 |
+3   | Compilation Error   |
+4   | Runtime Error       |
+5   | Time Limit Exceeded |
+6   | Presentation Error  |
+7   | Wrong Answer        |
+8   | Closed              |
+
+## Problems
+- bla bla bla
+
+## Source Code
+- bla bla bla
+
+> For submit a source code use this example of requisition:
+
+```python
+import json
+import requests
+
+url = "https://api.urionlinejudge.com.br/runs/submit"
+
+headers = {
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer " + "fyJ0eXPoOiLKO1QiiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBipBvFkDEtBiPqVEC-U",
+}
+
+source = """
+#include <stdio.h>
+
+int main() {
+    int A, B, X;
+
+    scanf("%d", &A);
+    scanf("%d", &B);
+
+    X=A+B;
+
+    printf("X = %d\\n", X);
+
+    return 0;
+}
+"""
+
+data = {
+    'user': ID,
+    'problem': 1001,
+    'language': 1,
+    'source': source,
+}
+
+response = requests.request("POST", url, data=json.dumps(data), headers=headers)
+
+print(response.text)
+
+```
+
+> This code, will return a JSON like this:
+
+```json
+{
+  "run":
+    {
+      "id":10382855,
+      "user":119433,
+      "problem":1001,
+      "language":1,
+      "created":"2018-05-15T14:03:41+00:00"
+    }
+}
+```
