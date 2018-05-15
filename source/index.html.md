@@ -476,33 +476,7 @@ Id  | Name                |
 You must be logged in to access this link
 </aside>
 
-# Submitting Source Codes
-
-- It is possible to submit a source code on behalf of a user using a POST request to the url:</br>
-**POST**: ```https://api.urionlinejudge.com.br/runs/submit```
-
-<aside class="notice">
-For the post method to work you need to send the user ID, language ID the problem ID and source code
-</aside>
-
-## Languages
-
-Id  | Name                |
---- |-------------------- |
-1   | C                   |
-2   | C++                 |
-3   | Compilation Error   |
-4   | Runtime Error       |
-5   | Time Limit Exceeded |
-6   | Presentation Error  |
-7   | Wrong Answer        |
-8   | Closed              |
-
-## Problems
-- bla bla bla
-
-## Source Code
-- bla bla bla
+## Submitting Source Codes
 
 > For submit a source code use this example of requisition:
 
@@ -561,4 +535,101 @@ print(response.text)
       "created":"2018-05-15T14:03:41+00:00"
     }
 }
+```
+
+- It is possible to submit a source code on behalf of a user using a POST request to the url:</br>
+**POST**: ```https://api.urionlinejudge.com.br/runs/submit```
+
+<aside class="notice">
+Authorization to submit source code through API requires special authorization granted by the URI Online Judge team! If need to contact our team, please send feedback by this link: https://www.urionlinejudge.com.br/judge/en/contact
+</aside>
+
+<aside class="warning">
+If your application does not have permission, the following message error will be returned: You are not authorized to access that location.
+</aside>
+
+<aside class="notice">
+For the post method to work you need to send the user ID, language ID the problem ID and source code.
+</aside>
+
+### Languages
+
+- The IDs listed below are the languages that are possible through the API submit
+
+ID  | Name       | Compiler                      | Additional Time |
+--- |------------|-------------------------------|-----------------|
+1   | C          | gcc 4.8.5, -O2                | +0s             |
+2   | C++        | g++ 4.8.5, -std=c++11 -02 -lm | +0s             |
+3   | Java 7     | OpenJDK 1.7.0                 | +2s             |
+4   | Python 2   | Python 2.7.6                  | +1s             |
+5   | Python 3   | Python 3.4.3                  | +1s             |
+6   | Ruby       | ruby 2.3.0                    | +5s             |
+7   | C#         | mono 5.4.0                    | +2s             |
+8   | Scala      | scalac 2.11.8                 | +2s             |
+10  | JavaScript | nodejs 8.4.0                  | +2s             |
+11  | Java 8     | OpenJDK 1.8.0                 | +2s             |
+12  | Go         | go 1.8.2                      | +2s             |
+13  | PostgreSQL | psql 9.4.14                   | +0s             |
+14  | C99        | gcc 4.8.5, -std=c99 -O2 -lm   | +0s             |
+15  | Kotlin     | Kotlin 1.2.0                  | +2s             |
+16  | C++17      | g++ 7.2.0, -std=c++17 -02 -lm | +0s             |
+
+<aside class="notice">
+The Scala, JavaScript and Go are in beta.
+</aside>
+
+### Problems
+<aside class="notice">
+Only SQL problems (category 9) receive requests containing the PostgreSQL language.
+</aside>
+
+<aside class="warning">
+Requests with PostgreSQL language in problems that are not in category 9 returned the following error message: The requested problem does not accept SQL solutions.
+</aside>
+
+<aside class="warning">
+Requests in different language of PostgreSQL in problems of category 9 returned the following error message:he request problem can only accept SQL solutions
+</aside>
+
+### Source Code
+
+- You can submit a request by passing the source code directly to the source assignment, however, one must pay attention to use escapes in special characters of the python language.</br> Any doubt consult the documentation: ```https://docs.python.org/2.0/ref/strings.html```
+
+- If it is necessary to read the source code of an external file and then make the requisition, the example on the side shows how to do this.
+
+<aside class="warning">
+If you do not enter the source parameter in data, the following error message is returned: Source code should not be empty.
+</aside>
+
+> Requisition example of how to submit a source code from a file:
+
+```python
+import json
+import requests
+
+url = "https://api.urionlinejudge.com.br/runs/submit"
+
+headers = {
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer " + "fyJ0eXPoOiLKO1QiiJIUzO1NiJ9.eyJzdWIiOjF9.5_KOZGatI2yINbYIBipBvFkDEtBiPqVEC-U",
+}
+
+PATH_TO_FILE = "/home/user/1001.c"
+
+temp_file = open(PATH_TO_FILE,"r")
+
+source = temp_file.read()
+
+data = {
+    'user': 119433,
+    'problem': 1001,
+    'language': 1,
+    'source': source,
+}
+
+
+response = requests.request("POST", url, data=json.dumps(data), headers=headers)
+
+print(response.text)
 ```
